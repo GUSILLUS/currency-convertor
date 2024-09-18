@@ -1,26 +1,16 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { CurrencyConverter } from "features";
+import { Header } from "components";
+import { useGetRates } from "shared/hooks";
+import { Loader } from "shared/ui";
 
-function App() {
+export const App = () => {
+  const { rates, updatedAt, nextUpdateAt, isLoading, error } = useGetRates();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <div className="h-full-screen p-8">
+      {isLoading ? <Loader size="l" /> : <div className="flex h-full flex-col gap-4 rounded-xl border-4 border-slate-300 border-solid bg-slate-400 overflow-hidden shadow-2xl shadow-slate-600">
+        <Header rates={rates} updatedAt={updatedAt} nextUpdateAt={nextUpdateAt} />
+        <CurrencyConverter />
+      </div>}
+    </div>)
 }
-
-export default App;
