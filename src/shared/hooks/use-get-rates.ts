@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { ExchangeRates } from "shared/types";
 
 export const useGetRates = (fromCurrency: string) => {
-  const api = `${process.env.REACT_APP_EXCHANGE_RATES_API as string}/${fromCurrency || 'USD'}`;
+  const api = `https://open.er-api.com/v6/latest/${fromCurrency || 'USD'}`;
 
   const fetchRates = async () => {
     const res = await fetch(api);
