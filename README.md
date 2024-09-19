@@ -1,46 +1,109 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Currency Converter
 
-## Available Scripts
+## Description
 
-In the project directory, you can run:
+This project is a simple currency converter that displays current exchange rates and allows conversion between different currencies. The header shows the current exchange rates for USD and EUR relative to the Ukrainian Hryvnia (UAH), updating every second.
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Displays the current exchange rates for USD and EUR relative to UAH.
+- Conversion between three currencies: UAH, USD, EUR.
+- Two separate fields for entering values and selecting currencies (input + select) for each currency.
+- Automatic conversion when the value in a field or the selected currency changes.
+- Header updates the currency rates every second using a public API.
+- Bidirectional conversion: changing one currency automatically recalculates the other.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Tech Stack
 
-### `npm test`
+- **React**
+- **TypeScript**
+- **React Query** for API data fetching and caching.
+- **date-fns** for date formatting.
+- **CSS/Tailwind CSS** for styling (or add your preferred styling method).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation and Setup
 
-### `npm run build`
+### Steps to Run the Project:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Clone this repository:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+   ```bash
+   git clone <repo-url>
+   ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+2. Navigate to the project directory:
 
-### `npm run eject`
+   ```bash
+   cd currency-converter
+   ```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+3. Install dependencies:
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+   ```bash
+   npm install
+   ```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+4. Start the project in development mode:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+   ```bash
+   npm run dev
+   ```
 
-## Learn More
+5. Open the application in your browser:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+   ```bash
+   http://localhost:3000
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Build for Production:
+
+To build the project for production, run:
+
+```bash
+npm run build
+```
+
+## Project Structure
+
+```bash
+├── public
+│   └── assets
+│       └── reverse.png   # Image for the component
+├── src
+│   ├── assets        # Application assets
+│   └── shared
+│      ├── components        # Application components
+│      ├── hooks             # Custom hooks
+│      ├── services          # API services
+│      ├── types             # Type declarations
+│   ├── App.tsx           # Main component
+│   └── index.tsx         # Entry point
+└── tsconfig.json         # TypeScript configuration
+```
+
+### Currency Conversion
+
+Conversion happens in both directions — changing a value in one field or selecting a currency updates the corresponding value in the other field automatically.
+
+## Absolute Imports Configuration
+
+To use absolute imports in the project, `tsconfig.json` is configured as follows:
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "*": [
+        "*"
+      ]
+    },
+  }
+}
+```
+
+## Requirements
+
+- Node.js 18.x or newer
+- NPM or Yarn
