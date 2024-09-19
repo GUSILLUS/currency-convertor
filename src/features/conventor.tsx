@@ -68,14 +68,14 @@ export const CurrencyConverter = () => {
   }, [fromCurrency]);
 
   return (
-    <div className="relative flex grow flex-col items-center justify-center gap-3 p-4">
+    <section className="relative flex grow flex-col items-center justify-center gap-1 p-2 pt-0 sm:gap-3 sm:p-4">
       <ConvertorInput label="From:" options={options} selectValue={fromCurrency} inputValue={amount1} isLoading={isLoading} onSelectionChange={(value) => handleCurrencyChange(value, true)} onInputChange={handleChangeCurrencyFrom} />
 
-      <button type='button' className="-translate-y-1/4 absolute top-1/2 right-[80%] h-14 w-14 translate-x-1/2 rounded-2xl bg-slate-500 p-1" onClick={handleReverseCurrencies}>
+      <button type='button' className="-translate-y-1/4 absolute top-1/2 right-1/2 h-10 w-10 translate-x-1/2 rounded-2xl bg-slate-500 p-1 shadow-md sm:right-[80%] sm:h-14 sm:w-14" onClick={handleReverseCurrencies}>
         <img src={reverseIcon} alt="reverse" />
       </button>
 
       <ConvertorInput label="To:" options={options} selectValue={toCurrency} inputValue={amount2} isLoading={isLoading} onSelectionChange={(value) => handleCurrencyChange(value, false)} onInputChange={handleChangeCurrencyTo} />
-    </div>
+    </section>
   );
 };

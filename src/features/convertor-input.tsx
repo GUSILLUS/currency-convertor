@@ -17,7 +17,7 @@ export const ConvertorInput = ({ label, options, selectValue, inputValue, isLoad
           {label}
         </Typography>
 
-        <div className="flex w-[400px] gap-2 rounded-xl border border-slate-300 border-solid bg-slate-200 p-4 shadow-xl">
+        <div className="flex max-w-[400px] gap-2 rounded-xl border border-slate-300 border-solid bg-slate-200 p-4 shadow-xl">
           <select value={selectValue} onChange={e => onSelectionChange(e.target.value)} className="max-h-[300px] rounded-xl bg-slate-300 px-3 py-2 font-inter font-medium text-slate-800 text-xl outline-none" disabled={isLoading}>
             {options}
           </select>

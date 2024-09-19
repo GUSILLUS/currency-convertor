@@ -34,17 +34,17 @@ export const Typography = ({ className, as: Component = 'p', variant = 'p1-regul
     className={cn(
       'proportional-nums',
 
-      { "font-bold font-inter text-[32px] leading-10": variant === 'h1' },
-      { "font-bold font-inter text-3xl leading-10": variant === 'h2' },
-      { "font-bold font-inter text-xl leading-[26px]": variant === 'h3' },
+      { "font-bold font-inter text-[20px] leading-5 sm:text-[32px] sm:leading-10": variant === 'h1' },
+      { "font-bold font-inter text-[15px] leading-5 sm:text-3xl sm:leading-10": variant === 'h2' },
+      { "font-bold font-inter text-[12px] leading-5 sm:text-xl sm:leading-[26px]": variant === 'h3' },
 
-      { 'font-inter text-base': variant === 'p1-regular' },
-      { "font-inter font-medium text-base": variant === 'p1-medium' },
-      { "font-bold font-inter text-base": variant === 'p1-bold' },
+      { "font-inter text-[14px] leading-[20px] sm:text-base": variant === 'p1-regular' },
+      { "font-inter font-medium text-[14px] leading-[20px] sm:text-base": variant === 'p1-medium' },
+      { "font-bold font-inter text-[14px] leading-[20px] sm:text-base": variant === 'p1-bold' },
 
-      { 'font-inter text-sm leading-[22px]': variant === 'p2-regular' },
-      { "font-inter font-medium text-sm leading-[22px]": variant === 'p2-medium' },
-      { "font-bold font-inter text-sm leading-[22px]": variant === 'p2-bold' },
+      { "font-inter text-[12px] leading-4 sm:text-sm sm:leading-[22px]": variant === 'p2-regular' },
+      { "font-inter font-medium text-[12px] leading-4 sm:text-sm sm:leading-[22px]": variant === 'p2-medium' },
+      { "font-bold font-inter text-[12px] leading-4 sm:text-sm sm:leading-[22px]": variant === 'p2-bold' },
 
       className,
     )}
