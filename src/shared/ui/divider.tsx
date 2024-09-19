@@ -1,7 +1,5 @@
 import cn from 'classnames';
 
-import { Typography } from 'shared/ui';
-
 interface Props {
   isHorizontal?: boolean;
   className?: string;

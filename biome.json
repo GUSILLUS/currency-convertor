@@ -13,7 +13,10 @@
           "fix": "safe",
           "options": {}
         }
-      }
+      },
+      "correctness": {
+				"useExhaustiveDependencies": "warn"
+			}
     }
   },
   "formatter": {

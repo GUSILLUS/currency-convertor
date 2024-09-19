@@ -1,58 +1,81 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useGetRates } from 'shared/hooks';
+import type { ExchangeRates } from 'shared/types';
+import { ConvertorInput } from './convertor-input';
 
-interface ExchangeRates {
-  USD: number;
-  EUR: number;
-  UAH: number;
-}
+import reverseIcon from 'assets/reverse.png';
 
-export const CurrencyConverter: React.FC = () => {
-  const [rates, setRates] = useState<ExchangeRates>({ USD: 0, EUR: 0, UAH: 1 });
-  const [currency1, setCurrency1] = useState('USD');
-  const [currency2, setCurrency2] = useState('UAH');
+export const CurrencyConverter = () => {
   const [amount1, setAmount1] = useState('0');
   const [amount2, setAmount2] = useState('0');
+  const [fromCurrency, setFromCurrency] = useState('USD');
+  const [toCurrency, setToCurrency] = useState('UAH');
 
-  const convertCurrency1To2 = (value: string) => {
-    const rate1 = rates[currency1 as keyof ExchangeRates];
-    const rate2 = rates[currency2 as keyof ExchangeRates];
+  const { rates, isLoading, refetch } = useGetRates(fromCurrency);
+
+  const currencyKeys = useMemo(() => Object.keys(rates), [rates]);
+
+  const options = useMemo(() => currencyKeys.map((rate) => (
+    <option key={rate} value={rate}>{rate}</option>
+  )), [currencyKeys]);
+
+  const updateAmounts = useCallback((value: string, fromCurrency: string, toCurrency: string, setAmount: (value: string) => void) => {
+    const rateFrom = rates[fromCurrency as keyof ExchangeRates];
+    const rateTo = rates[toCurrency as keyof ExchangeRates];
+    setAmount(((+value * rateTo) / rateFrom).toFixed(2));
+  }, [rates]);
+
+  const handleCurrencyChange = useCallback((currency: string, isCurrency1: boolean) => {
+    if (isCurrency1) {
+      if (currency === toCurrency) {
+        setFromCurrency(currency);
+        setToCurrency(fromCurrency);
+      } else {
+        setFromCurrency(currency);
+      }
+    } else {
+      if (currency === fromCurrency) {
+        setFromCurrency(toCurrency);
+        setToCurrency(currency);
+      } else {
+        setToCurrency(currency);
+      }
+    }
+  }, [fromCurrency, toCurrency]);
+
+  const handleReverseCurrencies = () => {
+    setFromCurrency(toCurrency);
+    setToCurrency(fromCurrency);
+    updateAmounts(amount1, toCurrency, fromCurrency, setAmount2);
+  };
+
+  const handleChangeCurrencyFrom = (value: string) => {
     setAmount1(value);
-    setAmount2(((+value * rate2) / rate1).toFixed(2));
-  };
+    updateAmounts(value, fromCurrency, toCurrency, setAmount2);
+  }
 
-  const convertCurrency2To1 = (value: string) => {
-    const rate1 = rates[currency1 as keyof ExchangeRates];
-    const rate2 = rates[currency2 as keyof ExchangeRates];
-    setAmount2(value);
-    setAmount1(((+value * rate1) / rate2).toFixed(2));
-  };
+  const handleChangeCurrencyTo = (value: string) => {
+    setAmount1(value);
+    updateAmounts(value, toCurrency, fromCurrency, setAmount1);
+  }
+
+  useEffect(() => {
+    updateAmounts(amount1, fromCurrency, toCurrency, setAmount2);
+  }, [fromCurrency, updateAmounts]);
+
+  useEffect(() => {
+    refetch();
+  }, [fromCurrency]);
 
   return (
-    <div className='p-4'>
-        <div>
-          <input
-            type="number"
-            value={amount1}
-            onChange={e => convertCurrency1To2((e.target.value))}
-          />
-          <select value={currency1} onChange={e => setCurrency1(e.target.value)}>
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="UAH">UAH</option>
-          </select>
-        </div>
-        <div>
-          <input
-            type="number"
-            value={amount2}
-            onChange={e => convertCurrency2To1((e.target.value))}
-          />
-          <select value={currency2} onChange={e => setCurrency2(e.target.value)}>
-            <option value="USD">USD</option>
-            <option value="EUR">EUR</option>
-            <option value="UAH">UAH</option>
-          </select>
-        </div>
+    <div className="relative flex grow flex-col items-center justify-center gap-3 p-4">
+      <ConvertorInput label="From:" options={options} selectValue={fromCurrency} inputValue={amount1} isLoading={isLoading} onSelectionChange={(value) => handleCurrencyChange(value, true)} onInputChange={handleChangeCurrencyFrom} />
+
+      <button type='button' className="-translate-y-1/4 absolute top-1/2 right-[80%] h-14 w-14 translate-x-1/2 rounded-2xl bg-slate-500 p-1" onClick={handleReverseCurrencies}>
+        <img src={reverseIcon} alt="reverse" />
+      </button>
+
+      <ConvertorInput label="To:" options={options} selectValue={toCurrency} inputValue={amount2} isLoading={isLoading} onSelectionChange={(value) => handleCurrencyChange(value, false)} onInputChange={handleChangeCurrencyTo} />
     </div>
   );
 };
